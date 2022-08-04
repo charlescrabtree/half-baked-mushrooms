@@ -42,7 +42,7 @@ addMushroomButton.addEventListener('click', () => {
 
 addFriendButton.addEventListener('click', () => {
     // get the name from the input
-    const name = friendInputEl.ariaValueMax;
+    const name = friendInputEl.value;
     const newFriend = {
         name: name || `Friend #${Math.floor(Math.random() * 1000)}`,
         satisfaction: 1
@@ -59,6 +59,14 @@ addFriendButton.addEventListener('click', () => {
     // display all the friends (use a function here)
 });
 
+function findFriendByName(name, friends) {
+    for (let friend of friends) {
+        if (friend.name === name) {
+            return friend;
+        }
+    }
+}
+
 function displayFriends() {
     // clear out the friends in DOM
     friendsEl.textContent = '';
@@ -69,6 +77,10 @@ function displayFriends() {
 
         friendEl.addEventListener('click', () => {
             const friendInState = findFriendByName(friend.name, friendData);
+
+            if (mushroomCount === 0) {
+                alert('the mushrooms are gone, go find some more!');
+            }
 
             if (mushroomCount > 0 && friendInState.satisfaction < 3) {
                 friendInState.satisfaction++;
@@ -84,13 +96,6 @@ function displayFriends() {
     }
 }
 
-function findFriendByName(name, friends) {
-    for (let friend of friends) {
-        if (friend.name === name) {
-            return friend;
-        }
-    }
-}
 
 function displayMushrooms() {
     // clear out the mushroom div
